@@ -1,0 +1,3 @@
+# Default CI values for node-load
+
+primes: "1000000"

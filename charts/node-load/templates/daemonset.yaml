@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    k8s-app: {{ template "fullname" . }}
+spec:
+  selector:
+    matchLabels:
+      name: {{ template "fullname" . }}
+  template:
+    metadata:
+      labels:
+        name: {{ template "fullname" . }}
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args:
+          - "{{ .Values.jar }}"
+          - "{{ .Values.primes | default 1000000 }}"
+        resources:
+{{ toYaml .Values.resources | indent 10 }}

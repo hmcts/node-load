@@ -1,0 +1,16 @@
+# Default values for node-load
+
+jar: "node-load-1.0.0.jar"
+primes: 1000000
+
+image:
+  repository: hmcts/node-load
+  tag: latest
+  pullPolicy: Always
+resources:
+  limits:
+    cpu: 2000m
+    memory: 2048Mi
+  requests:
+    cpu: 2000m
+    memory: 1024Mi
